@@ -11,7 +11,7 @@ public class TitleScene : BaseScene
 		FSprite background = new FSprite ("background.png");
 		title = new FSprite ("titleImage.png");
 		
-		testButton = new JFButton ("titleImage.png");
+		testButton = new JFButton ("play.png");
 		
 		testButton.SignalRelease += HandleTestButtonSignalRelease;
 		
@@ -44,7 +44,7 @@ public class TitleScene : BaseScene
 
 	void HandleTestButtonSignalRelease (FButton obj)
 	{
-		AnimateOut(new TitleScene());
+		AnimateOut (new TitleScene ());
 		
 	}
 	
@@ -52,18 +52,18 @@ public class TitleScene : BaseScene
 	{
 		base.AnimateOut (nextScene);
 		
-		Go.killAllTweensWithTarget(title);
-		Go.killAllTweensWithTarget(testButton);
+		Go.killAllTweensWithTarget (title);
+		Go.killAllTweensWithTarget (testButton);
 		
-		TweenConfig animateOutTween = new TweenConfig()
+		TweenConfig animateOutTween = new TweenConfig ()
 			.setDelay (.3f)
 			.floatProp ("scale", 0)
-			.setEaseType(EaseType.Linear);
+			.setEaseType (EaseType.Linear);
 		
 		Go.to (title, 1.0f, animateOutTween);
 		animateOutTween
 			.setDelay (.5f)
-			.onComplete(HandleAnimateOutComplete);
+			.onComplete (HandleAnimateOutComplete);
 				
 		Go.to (testButton, 1.0f, animateOutTween);
 	}

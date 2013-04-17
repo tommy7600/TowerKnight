@@ -143,6 +143,7 @@
         <array>
             <filename>background.png</filename>
             <filename>titleImage.png</filename>
+            <filename>play.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
