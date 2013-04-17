@@ -112,7 +112,7 @@ public class FButton : FContainer, FSingleTouchableInterface
 		return false;
 	}
 	
-	public void HandleSingleTouchMoved(FTouch touch)
+	public virtual void HandleSingleTouchMoved(FTouch touch)
 	{
 		Vector2 touchPos = _bg.GlobalToLocal(touch.position);
 		
