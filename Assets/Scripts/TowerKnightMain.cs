@@ -27,6 +27,9 @@ public class TowerKnightMain : MonoBehaviour
 		
 		Futile.atlasManager.LoadAtlas ("Atlases/atlasOne");
 		
+		FSprite background = new FSprite ("background.png");
+		Futile.stage.AddChild(background);
+		
 		GoToScene (new TitleScene ());
 		
 	}

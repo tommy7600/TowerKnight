@@ -8,14 +8,13 @@ public class TitleScene : BaseScene
 	
 	public override void Start ()
 	{
-		FSprite background = new FSprite ("background.png");
+		
 		title = new FSprite ("titleImage.png");
 		
 		testButton = new JFButton ("play.png");
 		
 		testButton.SignalRelease += HandleTestButtonSignalRelease;
 		
-		AddChild (background);
 		AddChild (title);
 		AddChild (testButton);		
 		
@@ -37,14 +36,12 @@ public class TitleScene : BaseScene
 		
 		Go.to (title, 2.0f, animateInTween);
 		
-		
-		
 		base.Start ();
 	}
 
 	void HandleTestButtonSignalRelease (FButton obj)
 	{
-		AnimateOut (new TitleScene ());
+		AnimateOut (new GameScene ());
 		
 	}
 	
