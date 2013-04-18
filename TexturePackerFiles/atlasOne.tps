@@ -144,6 +144,15 @@
             <filename>background.png</filename>
             <filename>titleImage.png</filename>
             <filename>play.png</filename>
+            <filename>Tilemap</filename>
+            <filename>Character/character_1.png</filename>
+            <filename>Character/character_2.png</filename>
+            <filename>Character/character_3.png</filename>
+            <filename>Character/character_4.png</filename>
+            <filename>Character/character_5.png</filename>
+            <filename>Character/character_6.png</filename>
+            <filename>Character/character_7.png</filename>
+            <filename>Character/character_8.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
