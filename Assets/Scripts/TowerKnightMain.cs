@@ -27,7 +27,14 @@ public class TowerKnightMain : MonoBehaviour
 		
 		Futile.atlasManager.LoadAtlas ("Atlases/atlasOne");
 		
+		// load font atlas
+		Futile.atlasManager.LoadAtlas("Atlases/Fonts");
+		
+		// Add large font text
+		Futile.atlasManager.LoadFont("Large", "Large Font.png", "Atlases/Large Font");
+		
 		FSprite background = new FSprite ("background.png");
+		
 		Futile.stage.AddChild(background);
 		
 		GoToScene (new TitleScene ());

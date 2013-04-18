@@ -12,6 +12,7 @@ public class TitleScene : BaseScene
 		title = new FSprite ("titleImage.png");
 		
 		testButton = new JFButton ("play.png");
+		testButton.AddLabel("Large", "Play", Color.white);
 		
 		testButton.SignalRelease += HandleTestButtonSignalRelease;
 		
