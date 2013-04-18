@@ -96,6 +96,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
 	"sourceSize": {"w":40,"h":40}
 },
+"tiles_3.png":
+{
+	"frame": {"x":362,"y":324,"w":40,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
+	"sourceSize": {"w":40,"h":40}
+},
 "titleImage.png":
 {
 	"frame": {"x":2,"y":460,"w":357,"h":33},
@@ -111,6 +119,6 @@
 	"format": "RGBA8888",
 	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7a94da319c159aa204d303ffeced6dbd$"
+	"smartupdate": "$TexturePacker:SmartUpdate:39dd09d178bd423250b43b5d85ceb442$"
 }
 }

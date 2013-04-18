@@ -37,7 +37,7 @@ public class TowerKnightMain : MonoBehaviour
 		
 		Futile.stage.AddChild(background);
 		
-		GoToScene (new TitleScene ());
+		GoToScene (new GameScene ());
 		
 	}
 	

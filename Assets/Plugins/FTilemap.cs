@@ -6,15 +6,11 @@ public class FTilemap : FContainer
 {
 	public bool repeatX = false;
 	public bool repeatY = false;
-	
 	protected string _baseName;
 	protected string _baseExtension;
-	
 	protected bool _skipZero;
-	
 	protected int _tilesWide;
 	protected int _tilesHigh;
-	
 	protected float _tileWidth;
 	protected float _tileHeight;
 	
@@ -28,7 +24,6 @@ public class FTilemap : FContainer
 	
 	// node which is located at the center of the clipping size, most likely FCamObject
 	protected FNode _clipNode;
-	
 	protected bool _clipToScreen = false;
 	protected Vector2 _clipPos;
 	
@@ -37,16 +32,16 @@ public class FTilemap : FContainer
 		_baseName = elementBase;
 		_baseExtension = elementExtension;
 		
-		_tiles = new List<FSprite>();
+		_tiles = new List<FSprite> ();
 	}
 	
-	override public void HandleAddedToStage()
+	override public void HandleAddedToStage ()
 	{
 		Futile.instance.SignalUpdate += Update;
-		base.HandleAddedToStage();
+		base.HandleAddedToStage ();
 	}
 	
-	override public void HandleRemovedFromStage()
+	override public void HandleRemovedFromStage ()
 	{
 		Futile.instance.SignalUpdate -= Update;
 		
@@ -54,26 +49,27 @@ public class FTilemap : FContainer
 			clipToScreen = false;
 		}
 		
-		base.HandleRemovedFromStage();
+		base.HandleRemovedFromStage ();
 	}
 	
-	virtual public void Update() {
+	virtual public void Update ()
+	{
 		if (_clipNode != null && !_skipZero) {
 			// get position of _clipNode relative to this
-			Vector2 relPos = StageToLocal(new Vector2(_clipNode.x, _clipNode.y));
+			Vector2 relPos = StageToLocal (new Vector2 (_clipNode.x, _clipNode.y));
 			
 			float xMin = relPos.x - _clipWidth / 2 - _tileWidth * 0.5f;
 			float yMin = relPos.y - _clipHeight / 2 - _tileHeight * 0.5f;
 			
 			// check if the _clipNode has moved enough to check tile positions
-			if (Mathf.Round(xMin / _tileWidth) == _clipPos.x && Mathf.Round(yMin / _tileHeight) == _clipPos.y) {
+			if (Mathf.Round (xMin / _tileWidth) == _clipPos.x && Mathf.Round (yMin / _tileHeight) == _clipPos.y) {
 				return;
 			}
-			_clipPos = new Vector2(Mathf.Round(xMin / _tileWidth), Mathf.Round(yMin / _tileHeight));
+			_clipPos = new Vector2 (Mathf.Round (xMin / _tileWidth), Mathf.Round (yMin / _tileHeight));
 			
 			// distance to wrap to next side
-			float tileOffsetX = (Mathf.Floor(_clipWidth / _tileWidth) + 2) * _tileWidth;
-			float tileOffsetY = (Mathf.Floor(_clipHeight / _tileHeight) + 2) * _tileHeight;
+			float tileOffsetX = (Mathf.Floor (_clipWidth / _tileWidth) + 2) * _tileWidth;
+			float tileOffsetY = (Mathf.Floor (_clipHeight / _tileHeight) + 2) * _tileHeight;
 			
 			float xMax = xMin + tileOffsetX;
 			float yMax = yMin + tileOffsetY;
@@ -103,8 +99,8 @@ public class FTilemap : FContainer
 				}
 				
 				if (tileChangedX || tileChangedY) {
-					int tileX = Mathf.FloorToInt((tile.x - _tileWidth / 2) / _tileWidth);
-					int tileY = Mathf.FloorToInt((-tile.y - _tileHeight / 2) / _tileHeight);
+					int tileX = Mathf.FloorToInt ((tile.x - _tileWidth / 2) / _tileWidth);
+					int tileY = Mathf.FloorToInt ((-tile.y - _tileHeight / 2) / _tileHeight);
 					
 					// loop?
 					if (repeatX) {
@@ -112,7 +108,7 @@ public class FTilemap : FContainer
 							tileX += _tilesWide;
 						} 
 						while (tileX >= _tilesWide) {
-							tileX -= _tilesWide ;
+							tileX -= _tilesWide;
 						}
 					} else if (tileX < 0 || tileX >= _tilesWide) { // display empty tile, outside of known data
 						tileX = -1;
@@ -133,9 +129,9 @@ public class FTilemap : FContainer
 					}
 					
 					int frame = tileX + tileY * _tilesWide;
-					if (frame >= 0 && frame < _tileArray.GetLength(0)) {
-						int frameNum = _tileArray[frame];
-						tile.element = Futile.atlasManager.GetElementWithName(_baseName+"_"+frameNum+"."+_baseExtension);
+					if (frame >= 0 && frame < _tileArray.GetLength (0)) {
+						int frameNum = _tileArray [frame];
+						tile.element = Futile.atlasManager.GetElementWithName (_baseName + "_" + frameNum + "." + _baseExtension);
 						tile.isVisible = true;
 					} else {
 						// show nothing, tile not within range
@@ -146,24 +142,25 @@ public class FTilemap : FContainer
 		}
 	}
 	
-	public void LoadText (string text, bool skipZero=true) {
+	public void LoadText (string text, bool skipZero=true)
+	{
 		
 		int zeroCount = 0;
 		
 		// remember for later
 		_skipZero = skipZero;
 		
-		string[] lines = text.Split('\n');
+		string[] lines = text.Split ('\n');
 		int i = 0;
 		int j = 0;
 		
 		// set width/height
-		string[] firstLine = lines[0].Split(',');
-		_tilesWide = firstLine.GetLength(0);
-		if (firstLine[firstLine.GetLength(0)-1] == "") {
+		string[] firstLine = lines [0].Split (',');
+		_tilesWide = firstLine.GetLength (0);
+		if (firstLine [firstLine.GetLength (0) - 1] == "") {
 			_tilesWide -= 1;
 		}
-		_tilesHigh = lines.GetLength(0);
+		_tilesHigh = lines.GetLength (0);
 		
 		// set array
 		_tileArray = new int[_tilesWide * _tilesHigh];
@@ -172,14 +169,14 @@ public class FTilemap : FContainer
 			if (line != "") { // skip empty rows
 				
 				// split into individual numbers
-				string[] frames = line.Split(',');
+				string[] frames = line.Split (',');
 				
 				i = 0;
 				foreach (string frame in frames) {
 					if (frame != "") { 
 						// keep track of all frames
-						int frameNum = int.Parse(frame);
-						_tileArray[i+(j*_tilesWide)] = frameNum;
+						int frameNum = int.Parse (frame);
+						_tileArray [i + (j * _tilesWide)] = frameNum;
 						
 						if (frameNum == 0) {
 							zeroCount++;
@@ -194,14 +191,14 @@ public class FTilemap : FContainer
 		}
 		
 		// get tile width/height
-		FAtlasElement element =	Futile.atlasManager.GetElementWithName(_baseName+"_1."+_baseExtension);
+		FAtlasElement element = Futile.atlasManager.GetElementWithName (_baseName + "_1." + _baseExtension);
 		_tileWidth = element.sourceSize.x;
 		_tileHeight = element.sourceSize.y;
 		
 		// warning if skipZero would give better results
 		if (_clipWidth > 0 && _clipHeight > 0 && _clipNode != null) {
-			int clipTilesWide = Mathf.CeilToInt(_clipWidth / _tileWidth) + 2;
-			int clipTilesHigh = Mathf.CeilToInt(_clipHeight / _tileHeight) + 2;
+			int clipTilesWide = Mathf.CeilToInt (_clipWidth / _tileWidth) + 2;
+			int clipTilesHigh = Mathf.CeilToInt (_clipHeight / _tileHeight) + 2;
 			if (zeroCount > clipTilesWide * clipTilesHigh) {
 				Debug.Log ("FTilemap would use less memory if _skipZero was true."); // uncomment next two lines if you want it to automatically use less resources
 				//_skipZero = true;
@@ -209,32 +206,34 @@ public class FTilemap : FContainer
 			}
 		}
 		
-		buildTiles();
+		buildTiles ();
 	}
 	
 	// skip zero lets us save resources by not adding tiles for the number 0
 	// if you need to be able to change empty tiles later, set skipZero to false
-	public void LoadCSV (string textFile, bool skipZero=true) {
-		TextAsset dataAsset = (TextAsset) Resources.Load (textFile, typeof(TextAsset));
-		if(!dataAsset) {
+	public void LoadCSV (string textFile, bool skipZero=true)
+	{
+		TextAsset dataAsset = (TextAsset)Resources.Load (textFile, typeof(TextAsset));
+		if (!dataAsset) {
 			Debug.Log ("FTilemap: Couldn't load the atlas data from: " + textFile);
 		}
-		string fileContents = dataAsset.ToString();
-		Resources.UnloadAsset(dataAsset);
+		string fileContents = dataAsset.ToString ();
+		Resources.UnloadAsset (dataAsset);
 		
-		this.LoadText(fileContents, skipZero);
+		this.LoadText (fileContents, skipZero);
 	}
 	
-	protected void buildTiles() {
+	protected void buildTiles ()
+	{
 		// clear pos so next update fixes tiles
 		_clipPos = Vector2.zero;
 		
 		// figure out needed size
-		int clipTilesWide = Mathf.CeilToInt(_clipWidth / _tileWidth) + 2;
+		int clipTilesWide = Mathf.CeilToInt (_clipWidth / _tileWidth) + 2;
 		if (_tilesWide < clipTilesWide || _clipWidth == 0 || _skipZero) {
 			clipTilesWide = _tilesWide;
 		}
-		int clipTilesHigh = Mathf.CeilToInt(_clipHeight / _tileHeight) + 2;
+		int clipTilesHigh = Mathf.CeilToInt (_clipHeight / _tileHeight) + 2;
 		if (_tilesHigh < clipTilesHigh || _clipHeight == 0 || _skipZero) {
 			clipTilesHigh = _tilesHigh;
 		}
@@ -246,27 +245,27 @@ public class FTilemap : FContainer
 			// make sure we have the right amount of tiles for the current clip size
 			if (_tiles.Count <= 0) {
 				for (int i = 0; i < totalNeeded; i++) {
-					FSprite sprite = new FSprite(_baseName + "_1." + _baseExtension); // set to 1
+					FSprite sprite = new FSprite (_baseName + "_1." + _baseExtension); // set to 1
 					
 					// add to this collection
-					_tiles.Add(sprite);
-					AddChild(sprite);
+					_tiles.Add (sprite);
+					AddChild (sprite);
 				}
 			} else if (_tiles.Count < totalNeeded) {
 				int start = _tiles.Count;
 				for (int i = start; i < totalNeeded; i++) {
-						FSprite sprite = new FSprite(_baseName + "_1." + _baseExtension);
+					FSprite sprite = new FSprite (_baseName + "_1." + _baseExtension);
 						
-						// add to this collection
-						_tiles.Add(sprite);
-						AddChild(sprite);
+					// add to this collection
+					_tiles.Add (sprite);
+					AddChild (sprite);
 				}
 			} else if (_tiles.Count > totalNeeded) {
 				int removeThisMany = _tiles.Count - totalNeeded;
 				for (int i = 0; i < removeThisMany; i++) {
 					// remove from the beginning of array
-					RemoveChild(_tiles[0]);
-					_tiles.RemoveAt(0);
+					RemoveChild (_tiles [0]);
+					_tiles.RemoveAt (0);
 				}
 			}
 		}
@@ -282,16 +281,16 @@ public class FTilemap : FContainer
 		// make array of sprites
 		for (int i = 0; i < clipTilesWide; i++) {
 			for (int j = 0; j < clipTilesHigh; j++) {
-				int frame = _tileArray[i + (j*_tilesWide)];
+				int frame = _tileArray [i + (j * _tilesWide)];
 				
 				if (!_skipZero || frame > 0) {
 					FSprite sprite;
 					if (_skipZero) {
-						sprite = new FSprite(_baseName + "_"+frame+"." + _baseExtension);
-						AddChild(sprite);
+						sprite = new FSprite (_baseName + "_" + frame + "." + _baseExtension);
+						AddChild (sprite);
 					} else {
-						sprite = _tiles[i + (j*clipTilesWide)];
-						sprite.element = Futile.atlasManager.GetElementWithName(_baseName+"_"+frame+"."+_baseExtension);
+						sprite = _tiles [i + (j * clipTilesWide)];
+						sprite.element = Futile.atlasManager.GetElementWithName (_baseName + "_" + frame + "." + _baseExtension);
 					}
 					
 					// offset sprite coordinates
@@ -309,41 +308,54 @@ public class FTilemap : FContainer
 		
 	}
 	
+	public int getTileFrame (int givenX, int givenY)
+	{
+		if (givenX > 0 &&
+			givenY > 0 &&
+			givenX < _tilesWide &&
+			givenY < _tilesHigh)
+			return _tileArray [givenX + (givenY * _tilesWide)];
+		else
+			return -1;
+	}
+	
 	// returns FSprite at 
-	public FSprite getTile(int givenX, int givenY) {
+	public FSprite getTile (int givenX, int givenY)
+	{
 		if (!_skipZero) {
 			int node = (givenX % _tilesWide) + givenY * _tilesWide;
 			
 			if (node < _tilesWide * _tilesHigh) {
-				return _childNodes[node] as FSprite;
+				return _childNodes [node] as FSprite;
 			} else {
 				Debug.Log ("FTilemap: index [" + node + "] outside of range: " + (_tilesWide * _tilesHigh));
 				return null;
 			}
 		} else {
-			return getTileAt(givenX * _tileWidth, givenY * _tileHeight);
+			return getTileAt (givenX * _tileWidth, givenY * _tileHeight);
 		}
 	}
 	
-	public FSprite getTileAt(float givenX, float givenY) {
+	public FSprite getTileAt (float givenX, float givenY)
+	{
 		if (!_skipZero) {
-			int node = (int)((_tilesWide % Mathf.Floor(givenX / _tileWidth)) + Mathf.Floor(givenY / _tileHeight) * _tilesWide);
+			int node = (int)((_tilesWide % Mathf.Floor (givenX / _tileWidth)) + Mathf.Floor (givenY / _tileHeight) * _tilesWide);
 			
 			if (node < _tilesWide * _tilesHigh) {
-				return _childNodes[node] as FSprite;
+				return _childNodes [node] as FSprite;
 			} else {
 				Debug.Log ("FTilemap: index [" + node + "] outside of range: " + (_tilesWide * _tilesHigh));
 				return null;
 			}
 		} else {
-			float checkX = Mathf.Floor(givenX / _tileWidth);
-			float checkY = Mathf.Floor(givenY / _tileHeight);
+			float checkX = Mathf.Floor (givenX / _tileWidth);
+			float checkY = Mathf.Floor (givenY / _tileHeight);
 			
 			// loop through the available sprites
 			foreach (FNode sprite in _childNodes) {
 				
-				float compareX = Mathf.Floor((sprite.x - _tileWidth/2) / (float)_tileWidth);
-				float compareY = -Mathf.Floor((sprite.y + _tileHeight/2) / (float)_tileHeight);
+				float compareX = Mathf.Floor ((sprite.x - _tileWidth / 2) / (float)_tileWidth);
+				float compareY = -Mathf.Floor ((sprite.y + _tileHeight / 2) / (float)_tileHeight);
 				
 				if (checkX == compareX && checkY == compareY) {
 					return sprite as FSprite;
@@ -355,40 +367,36 @@ public class FTilemap : FContainer
 		}
 	}
 	
-	virtual public void HandleResize(bool orientationChange) {
+	virtual public void HandleResize (bool orientationChange)
+	{
 		if (clipToScreen) {
 			// update width/height
 			_clipWidth = Futile.screen.width;
 			_clipHeight = Futile.screen.height;
 			
 			// reset tiles
-			buildTiles();
+			buildTiles ();
 		}
 	}
 	
-	public bool skipZero 
-	{
+	public bool skipZero {
 		get { return _skipZero; }
 	}
 	
-	virtual public float width
-	{
+	virtual public float width {
 		get { return _scaleX * _tilesWide * _tileWidth; }
 	}
 	
-	virtual public float height
-	{
+	virtual public float height {
 		get { return _scaleY * _tilesHigh * _tileHeight; }
 	}
 	
-	virtual public float clipWidth
-	{
+	virtual public float clipWidth {
 		get { return _clipWidth; }
 		set { _clipWidth = value; }
 	}
 	
-	virtual public float clipHeight
-	{
+	virtual public float clipHeight {
 		get { return _clipHeight; }
 		set { _clipHeight = value; }
 	}
@@ -413,13 +421,15 @@ public class FTilemap : FContainer
 		}
 	}
 	
-	virtual public int widthInTiles
-	{
+	public float tileWidth {
+		get { return _tileWidth; }
+	}
+	
+	virtual public int widthInTiles {
 		get { return _tilesWide; }
 	}
 	
-	virtual public int heightInTiles
-	{
+	virtual public int heightInTiles {
 		get { return _tilesHigh; }
 	}
 }
