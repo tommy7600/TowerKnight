@@ -86,16 +86,18 @@ public class GameScene : BaseScene
 			Futile.stage.x = targetX;
 		
 		if (character.y + cameraSpeed < targetY) {
-			character.play ("walkUp");
+			if (!moving)
+				character.play ("walkUp");
 			moving = true;
 			character.y += cameraSpeed;
 		} else if (character.y - cameraSpeed > targetY) {
-			character.play ("walkDown");
+			if (!moving)
+				character.play ("walkDown");
 			moving = true;
 			character.y -= cameraSpeed;
 		} else
 			character.y = targetY;
-		if(!moving)
+		if (!moving)
 			character.play ("walkDown");
 		Futile.stage.x = -character.x;
 		Futile.stage.y = -character.y;
