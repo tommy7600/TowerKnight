@@ -19,6 +19,7 @@ public class TowerKnightMain : MonoBehaviour
 	
 		FutileParams fparams = new FutileParams (true, true, false, false);
 		
+		fparams.shouldLerpToNearestResolutionLevel = false; 
 		fparams.AddResolutionLevel (480.0f, 1.0f, 1.0f, ""); //iPhone
 		
 		fparams.origin = new Vector2 (0.5f, 0.5f);
