@@ -8,7 +8,9 @@ public class TitleScene : BaseScene
 	
 	public override void Start ()
 	{
+		FSprite background = new FSprite ("background.png");
 		
+		AddChild(background);
 		title = new FSprite ("titleImage.png");
 		
 		testButton = new JFButton ("play.png");

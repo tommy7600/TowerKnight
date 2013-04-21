@@ -33,9 +33,7 @@ public class TowerKnightMain : MonoBehaviour
 		// Add large font text
 		Futile.atlasManager.LoadFont("Large", "Large Font.png", "Atlases/Large Font");
 		
-		FSprite background = new FSprite ("background.png");
 		
-		Futile.stage.AddChild(background);
 		
 		GoToScene (new GameScene ());
 		

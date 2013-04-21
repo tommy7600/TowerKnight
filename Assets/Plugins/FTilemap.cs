@@ -315,8 +315,8 @@ public class FTilemap : FContainer
 	
 	public int getTileFrame (int givenX, int givenY)
 	{
-		if (givenX > 0 &&
-			givenY > 0 &&
+		if (givenX >= 0 &&
+			givenY >= 0 &&
 			givenX < _tilesWide &&
 			givenY < _tilesHigh)
 			return _tileArray [givenX + (givenY * _tilesWide)];
