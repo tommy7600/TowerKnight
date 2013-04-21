@@ -173,9 +173,14 @@ public class FTilemap : FContainer
 				
 				i = 0;
 				foreach (string frame in frames) {
-					if (frame != "") { 
+					if (frame.CompareTo ("") != 0 && frame.CompareTo ("\r") != 0) { 
 						// keep track of all frames
-						int frameNum = int.Parse (frame);
+						int frameNum;
+						
+						bool parsed = int.TryParse (frame, out frameNum);
+						if (!parsed) {
+							Debug.Log ("Parse error: '" + frame + "'");
+						}
 						_tileArray [i + (j * _tilesWide)] = frameNum;
 						
 						if (frameNum == 0) {

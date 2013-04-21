@@ -11,6 +11,8 @@ public class GameScene : BaseScene
 	FTmxMap room1;
 	FTilemap fTileMap;
 	
+	FCamObject fCamera;
+	
 	Player character;
 	
 	public override void HandleAddedToStage ()
@@ -43,6 +45,10 @@ public class GameScene : BaseScene
 		
 		character = new Player(fTileMap);
 		
+		fCamera = new FCamObject();
+		fCamera.follow(character);
+		AddChild(fCamera);
+		
 		AddChild (character);
 		
 		character.x = f.x;
@@ -60,9 +66,6 @@ public class GameScene : BaseScene
 				character.goToPos(new Vector2(selectedTile.x, selectedTile.y));
 			}
 		}
-		
-		Futile.stage.x = (int)-character.x;
-		Futile.stage.y = (int)-character.y;
 		
 	}
 	
